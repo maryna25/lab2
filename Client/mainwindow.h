@@ -27,6 +27,10 @@ public slots:
 private slots:
     void on_btn_clicked();
 
+    void socketNewConnection();
+    void socketReadyRead();
+    void socketDisconnected();
+
 private:
     static const quint16 defaultPort = 1234;
 

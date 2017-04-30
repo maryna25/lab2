@@ -32,7 +32,7 @@ void MainWindow::on_btn_clicked()
     qDebug() << "Sending: " + path;
 
     socket = new QTcpSocket(this);
-    QHostAddress address("192.168.0.102");
+    QHostAddress address("192.168.0.100");
     //socket->connectToHost(QHostAddress::LocalHost, 1234);
     socket->connectToHost(address, 1234);
     socket->waitForConnected(3000);
@@ -53,12 +53,43 @@ void MainWindow::setup()
     server = new QTcpServer(this);
     connect(server, SIGNAL(newConnection()), this, SLOT(socketNewConnection()));
 
-    if (!server->listen(QHostAddress::Any, 1234)){
+    if (!server->listen(QHostAddress::Any, 5678)){
         qDebug() << "TCP server error";
     }
     else {
         qDebug() << "TCP server started";
     }
+}
+
+void MainWindow::socketNewConnection()
+{
+    qDebug() << "new connection";
+    answer_socket = new QTcpSocket(this);
+    answer_socket = server->nextPendingConnection();
+    connect(answer_socket, SIGNAL(readyRead()), this, SLOT(socketReadyRead()));
+    connect(answer_socket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
+}
+
+void MainWindow::socketReadyRead()
+{
+    QByteArray data = answer_socket->readAll();
+    qDebug() << "data received:" << data;
+
+    QDataStream ds(data);
+    int pos;
+    ds >> pos;
+
+    deleteName(pos);
+
+}
+
+void MainWindow::socketDisconnected()
+{
+    disconnect(answer_socket, SIGNAL(readyRead()), this, SLOT(socketReadyRead()));
+    disconnect(answer_socket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
+    qDebug() << "disconnected";
+
+    answer_socket->deleteLater();
 }
 
 void MainWindow::deleteName(int pos)

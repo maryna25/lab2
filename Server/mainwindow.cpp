@@ -74,17 +74,22 @@ void MainWindow::processStopped(int code)
         pos++;
     }
 
-    /*answer_socket = new QTcpSocket(this);
+    qDebug() << "Sending: " << pos;
+
+    answer_socket = new QTcpSocket(this);
     QHostAddress address("192.168.0.102");
     //answer_socket->connectToHost(QHostAddress::LocalHost, 5678);
     answer_socket->connectToHost(address, 5678);
     answer_socket->waitForConnected(3000);
 
-    QByteArray p = pos.toUtf8();
+    QByteArray p;
+    QDataStream stream(&p, QIODevice::ReadWrite);
+
+    stream << pos;
 
     answer_socket->write(p);
     answer_socket->flush();
     answer_socket->waitForBytesWritten(3000);
-    answer_socket->close();*/
+    answer_socket->close();
 
 }
