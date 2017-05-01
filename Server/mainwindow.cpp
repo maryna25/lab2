@@ -77,9 +77,9 @@ void MainWindow::processStopped(int code)
     qDebug() << "Sending: " << pos;
 
     answer_socket = new QTcpSocket(this);
-    QHostAddress address("192.168.0.102");
+    //QHostAddress address("192.168.0.102");
     //answer_socket->connectToHost(QHostAddress::LocalHost, 5678);
-    answer_socket->connectToHost(address, 5678);
+    answer_socket->connectToHost(client_address, 5678);
     answer_socket->waitForConnected(3000);
 
     QByteArray p;
@@ -92,4 +92,10 @@ void MainWindow::processStopped(int code)
     answer_socket->waitForBytesWritten(3000);
     answer_socket->close();
 
+}
+
+void MainWindow::on_btn_clicked()
+{
+    client_address.setAddress(ui->client_inp->text());
+    ui->btn->setDisabled(true);
 }

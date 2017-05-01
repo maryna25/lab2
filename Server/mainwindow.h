@@ -31,6 +31,8 @@ private slots:
 
     void processStopped(int code);
 
+    void on_btn_clicked();
+
 private:
     static const quint16 defaultPort = 1234;
 
@@ -38,6 +40,7 @@ private:
     QTcpServer* server;
     QTcpSocket* socket;
     QTcpSocket* answer_socket;
+    QHostAddress client_address;
 
     QVector<QProcess*> started_processes;
 

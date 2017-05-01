@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->progName->setDisabled(true);
+    ui->btn->setDisabled(true);
+
     setup();
 }
 
@@ -32,9 +35,9 @@ void MainWindow::on_btn_clicked()
     qDebug() << "Sending: " + path;
 
     socket = new QTcpSocket(this);
-    QHostAddress address("192.168.0.100");
+    //QHostAddress address("192.168.0.100");
     //socket->connectToHost(QHostAddress::LocalHost, 1234);
-    socket->connectToHost(address, 1234);
+    socket->connectToHost(server_address, 1234);
     socket->waitForConnected(3000);
 
     QString nameStr = path.split("\\").last();
@@ -105,3 +108,12 @@ void MainWindow::deleteName(int pos)
     ui->programslbl->setText(str);
 }
 
+
+void MainWindow::on_address_btn_clicked()
+{
+    server_address.setAddress(ui->address_inp->text());
+
+    ui->progName->setDisabled(false);
+    ui->btn->setDisabled(false);
+    ui->address_btn->setDisabled(true);
+}
