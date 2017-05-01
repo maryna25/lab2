@@ -34,7 +34,7 @@ private slots:
     void on_btn_clicked();
 
 private:
-    static const quint16 defaultPort = 1234;
+    quint16 defaultPort = 1234;
 
     Ui::MainWindow *ui;
     QTcpServer* server;

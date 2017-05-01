@@ -21,7 +21,7 @@ void MainWindow::setup()
     server = new QTcpServer(this);
     connect(server, SIGNAL(newConnection()), this, SLOT(socketNewConnection()));
 
-    if (!server->listen(QHostAddress::Any, 1234)){
+    if (!server->listen(QHostAddress::Any, defaultPort)){
         qDebug() << "TCP server error";
     }
     else {
@@ -87,6 +87,7 @@ void MainWindow::processStopped(int code)
 void MainWindow::on_btn_clicked()
 {
     client_address.setAddress(ui->client_inp->text());
+    defaultPort = ui->port_inp->text().toInt();
     ui->btn->setDisabled(true);
 }
 
@@ -94,7 +95,7 @@ void MainWindow::sendPos(int pos)
 {
     answer_socket = new QTcpSocket(this);
     //QHostAddress address("192.168.0.102");
-    answer_socket->connectToHost(client_address, 5678);
+    answer_socket->connectToHost(client_address, defaultPort);
     answer_socket->waitForConnected(3000);
 
     QByteArray p;

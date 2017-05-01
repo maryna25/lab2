@@ -84,12 +84,12 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>111</width>
+      <width>161</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Enter server address</string>
+     <string>Enter server address and port</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="address_inp">
@@ -105,7 +105,7 @@
    <widget class="QPushButton" name="address_btn">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>220</x>
       <y>40</y>
       <width>75</width>
       <height>23</height>
@@ -113,6 +113,16 @@
     </property>
     <property name="text">
      <string>Submit</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="port_inp">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>40</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
     </property>
    </widget>
   </widget>
