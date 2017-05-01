@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Client</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="label_2">
@@ -48,6 +48,9 @@
       <width>291</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>d:\KMPlayer\KMPlayer.exe</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn">
@@ -101,6 +104,9 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>192.168.0.101</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="address_btn">
     <property name="geometry">
@@ -123,6 +129,9 @@
       <width>81</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>1234</string>
     </property>
    </widget>
   </widget>

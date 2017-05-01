@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setup();
 }
 
 MainWindow::~MainWindow()
@@ -44,7 +43,6 @@ void MainWindow::socketReadyRead()
     qDebug() << "data received:" << data;
 
     QProcess *p = new QProcess(this);
-    //p->start("d:\KMPlayer\KMPlayer.exe");
     p->start(data);
     if(p->pid() == 0)
         sendPos(started_processes.size());
@@ -89,12 +87,13 @@ void MainWindow::on_btn_clicked()
     client_address.setAddress(ui->client_inp->text());
     defaultPort = ui->port_inp->text().toInt();
     ui->btn->setDisabled(true);
+
+    setup();
 }
 
 void MainWindow::sendPos(int pos)
 {
     answer_socket = new QTcpSocket(this);
-    //QHostAddress address("192.168.0.102");
     answer_socket->connectToHost(client_address, defaultPort);
     answer_socket->waitForConnected(3000);
 

@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->progName->setDisabled(true);
     ui->btn->setDisabled(true);
 
-    setup();
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +34,6 @@ void MainWindow::on_btn_clicked()
     qDebug() << "Sending: " + path;
 
     socket = new QTcpSocket(this);
-    //QHostAddress address("192.168.0.100");
     socket->connectToHost(server_address, defaultPort);
     socket->waitForConnected(3000);
 
@@ -120,4 +118,6 @@ void MainWindow::on_address_btn_clicked()
     ui->progName->setDisabled(false);
     ui->btn->setDisabled(false);
     ui->address_btn->setDisabled(true);
+
+    setup();
 }
