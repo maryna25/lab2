@@ -45,6 +45,7 @@ private:
     QVector<QProcess*> started_processes;
 
     void setup();
+    void sendPos(int pos);
 };
 
 #endif // MAINWINDOW_H

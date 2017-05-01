@@ -36,18 +36,21 @@ void MainWindow::on_btn_clicked()
 
     socket = new QTcpSocket(this);
     //QHostAddress address("192.168.0.100");
-    //socket->connectToHost(QHostAddress::LocalHost, 1234);
     socket->connectToHost(server_address, 1234);
     socket->waitForConnected(3000);
-
-    QString nameStr = path.split("\\").last();
-    addProgramLabel(nameStr);
 
     QByteArray path1 = path.toUtf8();
 
     socket->write(path1);
     socket->flush();
-    socket->waitForBytesWritten(3000);
+    if(!socket->waitForBytesWritten(3000))
+    {
+        QString nameStr = path.split("\\").last();
+        addProgramLabel(nameStr);
+    }
+    else
+        qDebug() << "Can't send!";
+
     socket->close();
 }
 

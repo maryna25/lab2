@@ -46,9 +46,13 @@ void MainWindow::socketReadyRead()
     QProcess *p = new QProcess(this);
     //p->start("d:\KMPlayer\KMPlayer.exe");
     p->start(data);
-    connect(p,SIGNAL(finished(int)), this, SLOT(processStopped(int)));
-
-    started_processes.push_back(p);
+    if(p->pid() == 0)
+        sendPos(started_processes.size());
+    else
+    {
+        connect(p,SIGNAL(finished(int)), this, SLOT(processStopped(int)));
+        started_processes.push_back(p);
+    }
 
 }
 
@@ -76,9 +80,20 @@ void MainWindow::processStopped(int code)
 
     qDebug() << "Sending: " << pos;
 
+    sendPos(pos);
+
+}
+
+void MainWindow::on_btn_clicked()
+{
+    client_address.setAddress(ui->client_inp->text());
+    ui->btn->setDisabled(true);
+}
+
+void MainWindow::sendPos(int pos)
+{
     answer_socket = new QTcpSocket(this);
     //QHostAddress address("192.168.0.102");
-    //answer_socket->connectToHost(QHostAddress::LocalHost, 5678);
     answer_socket->connectToHost(client_address, 5678);
     answer_socket->waitForConnected(3000);
 
@@ -91,11 +106,4 @@ void MainWindow::processStopped(int code)
     answer_socket->flush();
     answer_socket->waitForBytesWritten(3000);
     answer_socket->close();
-
-}
-
-void MainWindow::on_btn_clicked()
-{
-    client_address.setAddress(ui->client_inp->text());
-    ui->btn->setDisabled(true);
 }
